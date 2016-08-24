@@ -32,15 +32,16 @@ extras = path.join(path.dirname(__file__), 'extras')
 # Init images & sounds
 gameIcon = pygame.image.load(path.join(assets + '/gameicon.png'))
 
-# Game windown initialised
+# Game windown, caption initialised
 gameDisplay = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption('SmartCar')
 pygame.display.update()
 
-
+# Game icon init
 pygame.display.set_icon(gameIcon)
 gameplay = True
 
+# Heart starts beating, Don't stop it!
 while gameplay:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
