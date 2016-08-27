@@ -2,8 +2,7 @@
 # @Author: Amar Prakash Pandey
 # @Date: 25-08-2016 
 # @Email: amar.om1994@gmail.com  
-# @Github username: @amarlearning
-# @Last Modified date:  
+# @Github username: @amarlearning 
 # MIT License. You can find a copy of the License
 # @http://amarlearning.mit-license.org
 
@@ -13,8 +12,21 @@ import time
 import random
 from os import path
 
+# Material color init
+red = (255,0,0)
+green = (0,255,0)
+blue = (0,0,255)
+darkBlue = (0,0,128)
+white = (255,255,255)
+black = (0,0,0)
+grey = (211,211,211)
+
 # Pygame module initialised 
 pygame.init()
+
+# Folder path init
+assets = path.join(path.dirname(__file__), 'assets')
+extras = path.join(path.dirname(__file__), 'extras')
 
 # constants are defined
 display_width = 700
@@ -26,21 +38,17 @@ grass_height = 600
 border_width = 30
 border_height = 600
 
-# Material color init
-red = (255,0,0)
-green = (0,255,0)
-blue = (0,0,255)
-darkBlue = (0,0,128)
-white = (255,255,255)
-black = (0,0,0)
-grey = (211,211,211)
+divider_width = 20
+divider_height = 80
 
-# Folder path init
-assets = path.join(path.dirname(__file__), 'assets')
-extras = path.join(path.dirname(__file__), 'extras')
+divider_change = 0
+
+# Frames per second
+FPS = 4
 
 # Init images & sounds
 gameIcon = pygame.image.load(path.join(assets + '/gameicon.png'))
+clock = pygame.time.Clock()
 
 # Game windown, caption initialised
 gameDisplay = pygame.display.set_mode((display_width, display_height))
@@ -60,6 +68,14 @@ while gameplay:
 		else:
 			print event
 
+
+	# Dividing th road, not the people 
+	pygame.draw.rect(gameDisplay, white, ((display_width/2 - 10),20 + divider_change,divider_width,divider_height))
+	divider_change += 170
+
+	if(divider_change > 600):
+		divider_change = 0 
+
 	# Game basic design init [Left side]
 	pygame.draw.rect(gameDisplay, green, (0, 0, grass_width, grass_height))
 	pygame.draw.rect(gameDisplay, grey, (grass_width, 0, border_width, border_height))
@@ -70,6 +86,7 @@ while gameplay:
 
 	pygame.display.update()
 
+	clock.tick(FPS)
 
 # You will win, try one more time. Don't Quit.
 pygame.quit()
