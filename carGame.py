@@ -39,12 +39,12 @@ border_width = 30
 border_height = 600
 
 divider_width = 20
-divider_height = 80
+divider_height = 20
 
-divider_change = 0
+block = 40
 
 # Frames per second
-FPS = 4
+FPS = 5
 
 # Init images & sounds
 gameIcon = pygame.image.load(path.join(assets + '/gameicon.png'))
@@ -70,11 +70,11 @@ while gameplay:
 
 
 	# Dividing th road, not the people 
-	pygame.draw.rect(gameDisplay, white, ((display_width/2 - 10),20 + divider_change,divider_width,divider_height))
-	divider_change += 170
-
-	if(divider_change > 600):
-		divider_change = 0 
+	pygame.draw.rect(gameDisplay, white, ((display_width/2 - 10),20 + block,divider_width,divider_height))
+	if(block == 40):
+		block = 180
+	else:
+		block = 40
 
 	# Game basic design init [Left side]
 	pygame.draw.rect(gameDisplay, green, (0, 0, grass_width, grass_height))
