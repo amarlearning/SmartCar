@@ -39,9 +39,9 @@ border_width = 30
 border_height = 600
 
 divider_width = 20
-divider_height = 20
+divider_height = 80
 
-block = 40
+block = 0
 
 # Frames per second
 FPS = 5
@@ -71,10 +71,7 @@ while gameplay:
 
 	# Dividing th road, not the people 
 	pygame.draw.rect(gameDisplay, white, ((display_width/2 - 10),20 + block,divider_width,divider_height))
-	if(block == 40):
-		block = 180
-	else:
-		block = 40
+	block += 140
 
 	# Game basic design init [Left side]
 	pygame.draw.rect(gameDisplay, green, (0, 0, grass_width, grass_height))
