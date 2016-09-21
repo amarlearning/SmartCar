@@ -53,13 +53,18 @@ carLeftPosiitonY = 480
 carRightPosiitonX = 400
 carRightPosiitonY = 480
 
+# Grass 2D image & Road Divider
+grassSlip = 0
+Divider = True
+
 # Frames per second
-FPS = 10
+FPS = 5
 
 # Init images & sounds
 gameIcon = pygame.image.load(path.join(assets + '/gameicon.png'))
 grassRoad = pygame.image.load(path.join(assets + '/grassslip.png'))
-grass = pygame.image.load(path.join(assets + '/grass-sp.png'))
+stripOne = pygame.image.load(path.join(assets + '/stripone.png'))
+stripTwo = pygame.image.load(path.join(assets + '/striptwo.png'))
 SmartCarImage = pygame.image.load(path.join(assets + '/smartcar.png'))
 clock = pygame.time.Clock()
 
@@ -78,25 +83,18 @@ pygame.draw.rect(gameDisplay, grey, (grass_width, 0, border_width, border_height
 pygame.draw.rect(gameDisplay, green, (display_width - grass_width, 0, grass_width, grass_height))
 pygame.draw.rect(gameDisplay, grey, (display_width - grass_width - border_width, 0, border_width, border_height))
 
-gameDisplay.blit(grassRoad, (0,0))
-gameDisplay.blit(grassRoad, (0,63))
-gameDisplay.blit(grassRoad, (0,63*2))
-gameDisplay.blit(grassRoad, (0,63*3))
-gameDisplay.blit(grassRoad, (0,63*4))
-gameDisplay.blit(grassRoad, (0,63*5))
-gameDisplay.blit(grassRoad, (0,63*6))
-gameDisplay.blit(grassRoad, (0,63*7))
-gameDisplay.blit(grassRoad, (0,63*8))
-gameDisplay.blit(grassRoad, (0,63*9))
-
+for x in range(0,10):
+	gameDisplay.blit(grassRoad, (0,grassSlip))
+	gameDisplay.blit(grassRoad, (530,grassSlip))
+	grassSlip = grassSlip + 63
 
 
 # Picturising car image, sorry SmartCar image
 gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
 
+gameDisplay.blit(stripOne, (340,0))
+
 pygame.display.update()
-
-
 
 # Game icon init
 pygame.display.set_icon(gameIcon)
@@ -117,9 +115,16 @@ while gameplay:
 		else:
 			print event
 
-	# Dividing th road, not the people 
-	pygame.draw.rect(gameDisplay, white, ((display_width/2 - 10),20 + block,divider_width,divider_height))
-	block += 140
+	# # Dividing th road, not the people 
+	# pygame.draw.rect(gameDisplay, white, ((display_width/2 - 10),-50 + block,divider_width,divider_height))
+	# block += 140
+
+	if Divider == True:
+		gameDisplay.blit(stripTwo, (340, 0))
+		Divider = False
+	else :
+		gameDisplay.blit(stripOne, (340, 0))
+		Divider = True
 
 	pygame.display.update()
 
