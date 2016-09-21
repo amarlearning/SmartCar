@@ -33,7 +33,7 @@ grass_width = 170
 grass_height = 600
 
 # Folder path init
-assets = path.join(path.dirname(__file__), 'assets')
+assets = path.join(path.dirname(__file__), 'assets/image')
 extras = path.join(path.dirname(__file__), 'extras')
 
 # Init images & sounds
@@ -41,6 +41,7 @@ gameIcon = pygame.image.load(path.join(assets + '/gameicon.png'))
 grassRoad = pygame.image.load(path.join(assets + '/grassslip.png'))
 stripOne = pygame.image.load(path.join(assets + '/stripone.png'))
 stripTwo = pygame.image.load(path.join(assets + '/striptwo.png'))
+coverImage = pygame.image.load(path.join(assets + '/cover.png'))
 SmartCarImage = pygame.image.load(path.join(assets + '/smartcar.png'))
 
 clock = pygame.time.Clock()
@@ -109,9 +110,11 @@ while gameplay:
 			gameplay = False
 		elif event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_RIGHT:
+				gameDisplay.blit(coverImage, (carLeftPosiitonX-40,carLeftPosiitonY))
 				gameDisplay.blit(SmartCarImage, (carRightPosiitonX,carRightPosiitonY))
 				pygame.display.update()
 			if event.key == pygame.K_LEFT:
+				gameDisplay.blit(coverImage, (carRightPosiitonX-40,carRightPosiitonY))
 				gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
 				pygame.display.update()
 		else:
