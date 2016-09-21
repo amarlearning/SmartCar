@@ -12,6 +12,9 @@ import time
 import random
 from os import path
 
+# Pygame module initialised 
+pygame.init()
+
 # Material color init
 red = (255,0,0)
 green = (0,255,0)
@@ -21,13 +24,6 @@ white = (255,255,255)
 black = (0,0,0)
 grey = (211,211,211)
 
-# Pygame module initialised 
-pygame.init()
-
-# Folder path init
-assets = path.join(path.dirname(__file__), 'assets')
-extras = path.join(path.dirname(__file__), 'extras')
-
 # Display width and height are defined
 display_width = 700
 display_height = 600
@@ -35,6 +31,26 @@ display_height = 600
 # greenland width and height
 grass_width = 170
 grass_height = 600
+
+# Folder path init
+assets = path.join(path.dirname(__file__), 'assets')
+extras = path.join(path.dirname(__file__), 'extras')
+
+# Init images & sounds
+gameIcon = pygame.image.load(path.join(assets + '/gameicon.png'))
+grassRoad = pygame.image.load(path.join(assets + '/grassslip.png'))
+stripOne = pygame.image.load(path.join(assets + '/stripone.png'))
+stripTwo = pygame.image.load(path.join(assets + '/striptwo.png'))
+SmartCarImage = pygame.image.load(path.join(assets + '/smartcar.png'))
+
+clock = pygame.time.Clock()
+
+# Grass 2D image & Road Divider
+grassSlip = 0
+Divider = True
+
+# Frames per second
+FPS = 5
 
 # Road and Greenland seperator
 border_width = 30
@@ -44,29 +60,15 @@ border_height = 600
 divider_width = 20
 divider_height = 80
 
-#  Increment of divider
-block = 0
-
 # Images position locations
 carLeftPosiitonX = 240
 carLeftPosiitonY = 480
 carRightPosiitonX = 400
 carRightPosiitonY = 480
 
-# Grass 2D image & Road Divider
-grassSlip = 0
-Divider = True
-
-# Frames per second
-FPS = 5
-
-# Init images & sounds
-gameIcon = pygame.image.load(path.join(assets + '/gameicon.png'))
-grassRoad = pygame.image.load(path.join(assets + '/grassslip.png'))
-stripOne = pygame.image.load(path.join(assets + '/stripone.png'))
-stripTwo = pygame.image.load(path.join(assets + '/striptwo.png'))
-SmartCarImage = pygame.image.load(path.join(assets + '/smartcar.png'))
-clock = pygame.time.Clock()
+# Engine sound added
+menu_song = pygame.mixer.music.load(path.join(extras, "smartcar_engine_loop.wav"))
+pygame.mixer.music.play(-1)	
 
 # Image transformation 
 SmartCarImage = pygame.transform.rotate(SmartCarImage, 90)
@@ -114,10 +116,6 @@ while gameplay:
 				pygame.display.update()
 		else:
 			print event
-
-	# # Dividing th road, not the people 
-	# pygame.draw.rect(gameDisplay, white, ((display_width/2 - 10),-50 + block,divider_width,divider_height))
-	# block += 140
 
 	if Divider == True:
 		gameDisplay.blit(stripTwo, (340, 0))
