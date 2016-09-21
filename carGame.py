@@ -58,8 +58,8 @@ FPS = 10
 
 # Init images & sounds
 gameIcon = pygame.image.load(path.join(assets + '/gameicon.png'))
-grassRoad = pygame.image.load(path.join(assets + '/gameicon.png'))
-grass = pygame.image.load(path.join(assets + '/gameicon.png'))
+grassRoad = pygame.image.load(path.join(assets + '/grassslip.png'))
+grass = pygame.image.load(path.join(assets + '/grass-sp.png'))
 SmartCarImage = pygame.image.load(path.join(assets + '/smartcar.png'))
 clock = pygame.time.Clock()
 
@@ -70,7 +70,33 @@ SmartCarImage = pygame.transform.rotate(SmartCarImage, 90)
 gameDisplay = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption('SmartCar')
 
+# Game basic design init [Left side]
+pygame.draw.rect(gameDisplay, green, (0, 0, grass_width, grass_height))
+pygame.draw.rect(gameDisplay, grey, (grass_width, 0, border_width, border_height))
+
+# Game basic design init [Right side]
+pygame.draw.rect(gameDisplay, green, (display_width - grass_width, 0, grass_width, grass_height))
+pygame.draw.rect(gameDisplay, grey, (display_width - grass_width - border_width, 0, border_width, border_height))
+
+gameDisplay.blit(grassRoad, (0,0))
+gameDisplay.blit(grassRoad, (0,63))
+gameDisplay.blit(grassRoad, (0,63*2))
+gameDisplay.blit(grassRoad, (0,63*3))
+gameDisplay.blit(grassRoad, (0,63*4))
+gameDisplay.blit(grassRoad, (0,63*5))
+gameDisplay.blit(grassRoad, (0,63*6))
+gameDisplay.blit(grassRoad, (0,63*7))
+gameDisplay.blit(grassRoad, (0,63*8))
+gameDisplay.blit(grassRoad, (0,63*9))
+
+
+
+# Picturising car image, sorry SmartCar image
+gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
+
 pygame.display.update()
+
+
 
 # Game icon init
 pygame.display.set_icon(gameIcon)
@@ -94,17 +120,6 @@ while gameplay:
 	# Dividing th road, not the people 
 	pygame.draw.rect(gameDisplay, white, ((display_width/2 - 10),20 + block,divider_width,divider_height))
 	block += 140
-
-	# Picturising car image, sorry SmartCar image
-	gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
-
-	# Game basic design init [Left side]
-	pygame.draw.rect(gameDisplay, green, (0, 0, grass_width, grass_height))
-	pygame.draw.rect(gameDisplay, grey, (grass_width, 0, border_width, border_height))
-
-	# Game basic design init [Right side]
-	pygame.draw.rect(gameDisplay, green, (display_width - grass_width, 0, grass_width, grass_height))
-	pygame.draw.rect(gameDisplay, grey, (display_width - grass_width - border_width, 0, border_width, border_height))
 
 	pygame.display.update()
 
