@@ -58,6 +58,8 @@ FPS = 10
 
 # Init images & sounds
 gameIcon = pygame.image.load(path.join(assets + '/gameicon.png'))
+grassRoad = pygame.image.load(path.join(assets + '/gameicon.png'))
+grass = pygame.image.load(path.join(assets + '/gameicon.png'))
 SmartCarImage = pygame.image.load(path.join(assets + '/smartcar.png'))
 clock = pygame.time.Clock()
 
