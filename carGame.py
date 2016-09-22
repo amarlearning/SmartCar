@@ -57,18 +57,6 @@ clock = pygame.time.Clock()
 
 pygame.display.update()
 
-
-
-
-
-
-
-
-
-
-
-
-
 def init():
 	# Engine sound added
 	menu_song = pygame.mixer.music.load(path.join(extras, "engine_sound.mp3"))
@@ -100,7 +88,6 @@ def init():
 	gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
 	gameDisplay.blit(stripOne, (340,0))
 	pygame.display.update()
-
 
 def gameloop():
 	# All necessary variable initalised
