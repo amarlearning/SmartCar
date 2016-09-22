@@ -28,9 +28,8 @@ grey = (211,211,211)
 display_width = 700
 display_height = 600
 
-# greenland width and height
-grass_width = 170
-grass_height = 600
+# Frames per second
+FPS = 5
 
 # Folder path init
 assets = path.join(path.dirname(__file__), 'assets/image')
@@ -44,95 +43,115 @@ stripTwo = pygame.image.load(path.join(assets + '/striptwo.png'))
 coverImage = pygame.image.load(path.join(assets + '/cover.png'))
 SmartCarImage = pygame.image.load(path.join(assets + '/smartcar.png'))
 
-clock = pygame.time.Clock()
+# Game windown, caption initialised
+gameDisplay = pygame.display.set_mode((display_width, display_height))
 
-# Grass 2D image & Road Divider
-grassSlip = 0
-Divider = True
-
-# Frames per second
-FPS = 5
-
-# Road and Greenland seperator
-border_width = 30
-border_height = 600
-
-# Road's divider width and height
-divider_width = 20
-divider_height = 80
-
-# Images position locations
-carLeftPosiitonX = 240
-carLeftPosiitonY = 480
-carRightPosiitonX = 400
-carRightPosiitonY = 480
-
-# Engine sound added
-menu_song = pygame.mixer.music.load(path.join(extras, "smartcar_engine_loop.wav"))
-pygame.mixer.music.play(-1)	
+# Game icon init
+pygame.display.set_caption('SmartCar')
+pygame.display.set_icon(gameIcon)
 
 # Image transformation 
 SmartCarImage = pygame.transform.rotate(SmartCarImage, 90)
 
-# Game windown, caption initialised
-gameDisplay = pygame.display.set_mode((display_width, display_height))
-pygame.display.set_caption('SmartCar')
-
-# Game basic design init [Left side]
-pygame.draw.rect(gameDisplay, green, (0, 0, grass_width, grass_height))
-pygame.draw.rect(gameDisplay, grey, (grass_width, 0, border_width, border_height))
-
-# Game basic design init [Right side]
-pygame.draw.rect(gameDisplay, green, (display_width - grass_width, 0, grass_width, grass_height))
-pygame.draw.rect(gameDisplay, grey, (display_width - grass_width - border_width, 0, border_width, border_height))
-
-for x in range(0,10):
-	gameDisplay.blit(grassRoad, (0,grassSlip))
-	gameDisplay.blit(grassRoad, (530,grassSlip))
-	grassSlip = grassSlip + 63
-
-
-# Picturising car image, sorry SmartCar image
-gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
-
-gameDisplay.blit(stripOne, (340,0))
+clock = pygame.time.Clock()
 
 pygame.display.update()
 
-# Game icon init
-pygame.display.set_icon(gameIcon)
-gameplay = True
 
-# Heart starts beating, Don't stop it!
-while gameplay:
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			gameplay = False
-		elif event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_RIGHT:
-				gameDisplay.blit(coverImage, (carLeftPosiitonX-40,carLeftPosiitonY))
-				gameDisplay.blit(SmartCarImage, (carRightPosiitonX,carRightPosiitonY))
-				pygame.display.update()
-			if event.key == pygame.K_LEFT:
-				gameDisplay.blit(coverImage, (carRightPosiitonX-40,carRightPosiitonY))
-				gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
-				pygame.display.update()
-		else:
-			print event
 
-	if Divider == True:
-		gameDisplay.blit(stripTwo, (340, 0))
-		Divider = False
-	else :
-		gameDisplay.blit(stripOne, (340, 0))
-		Divider = True
 
+
+
+
+
+
+
+
+
+
+def init():
+	# Engine sound added
+	menu_song = pygame.mixer.music.load(path.join(extras, "engine_sound.mp3"))
+	pygame.mixer.music.play(-1)	
+
+	grassSlip = 0
+
+	grass_width = 170
+	grass_height = 600
+
+	# Road and Greenland seperator
+	border_width = 30
+	border_height = 600
+
+	# Images position locations
+	carLeftPosiitonX = 240
+	carLeftPosiitonY = 480
+
+	# Game basic design init [Left side] & [Right side]
+	pygame.draw.rect(gameDisplay, grey, (grass_width, 0, border_width, border_height))
+	pygame.draw.rect(gameDisplay, grey, (display_width - grass_width - border_width, 0, border_width, border_height))
+
+	for x in range(0,10):
+		gameDisplay.blit(grassRoad, (0, grassSlip))
+		gameDisplay.blit(grassRoad, (530, grassSlip))
+		grassSlip = grassSlip + 63
+
+	# Picturising car image, sorry SmartCar image
+	gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
+	gameDisplay.blit(stripOne, (340,0))
 	pygame.display.update()
 
-	clock.tick(FPS)
 
-# You will win, try one more time. Don't Quit.
-pygame.quit()
+def gameloop():
+	# All necessary variable initalised
+	init()
+	# Kickstart variable
+	gameplay = True
+	# Grass 2D image & Road Divider
+	Divider = True
 
-# you can signoff now, everything looks good!
-quit()
+	# Road's divider width and height
+	divider_width = 20
+	divider_height = 80
+
+	# Images position locations
+	carLeftPosiitonX = 240
+	carLeftPosiitonY = 480
+	carRightPosiitonX = 400
+	carRightPosiitonY = 480
+
+	# Heart starts beating, Don't stop it!
+	while gameplay:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				gameplay = False
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_RIGHT:
+					gameDisplay.blit(coverImage, (carLeftPosiitonX-40,carLeftPosiitonY))
+					gameDisplay.blit(SmartCarImage, (carRightPosiitonX,carRightPosiitonY))
+					pygame.display.update()
+				if event.key == pygame.K_LEFT:
+					gameDisplay.blit(coverImage, (carRightPosiitonX-40,carRightPosiitonY))
+					gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
+					pygame.display.update()
+			else:
+				print event
+
+		if Divider == True:
+			gameDisplay.blit(stripTwo, (340, 0))
+			Divider = False
+		else :
+			gameDisplay.blit(stripOne, (340, 0))
+			Divider = True
+
+		pygame.display.update()
+
+		clock.tick(FPS)
+
+	# You will win, try one more time. Don't Quit.
+	pygame.quit()
+
+	# you can signoff now, everything looks good!
+	quit()
+
+gameloop()
