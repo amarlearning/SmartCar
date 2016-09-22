@@ -53,8 +53,15 @@ pygame.display.set_icon(gameIcon)
 # Image transformation 
 SmartCarImage = pygame.transform.rotate(SmartCarImage, 90)
 
+# Clock init for Frames
 clock = pygame.time.Clock()
 
+# Fonts Init
+smallfont = pygame.font.SysFont("comicsansms", 30)
+mediumfont = pygame.font.SysFont("comicsansms", 40)
+largefont = pygame.font.SysFont("comicsansms", 60)
+
+# Display updated
 pygame.display.update()
 
 def init():
@@ -89,11 +96,17 @@ def init():
 	gameDisplay.blit(stripOne, (340,0))
 	pygame.display.update()
 
+def Score(score):
+	pygame.draw.rect(gameDisplay, green, (0,0, 170,45))
+	text = smallfont.render("Score : " + str(score), True, darkBlue)
+	gameDisplay.blit(text, [10,10])
+
 def gameloop():
 	# All necessary variable initalised
 	init()
 	# Kickstart variable
 	gameplay = True
+	score = 0
 	# Grass 2D image & Road Divider
 	Divider = True
 
@@ -123,6 +136,10 @@ def gameloop():
 					pygame.display.update()
 			else:
 				print event
+		
+		# Updating Score
+		Score(score)
+		score = score + 1
 
 		if Divider == True:
 			gameDisplay.blit(stripTwo, (340, 0))
