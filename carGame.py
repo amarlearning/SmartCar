@@ -26,7 +26,7 @@ grey = (211,211,211)
 
 # Display width and height are defined
 display_width = 700
-display_height = 600
+display_height = 700
 
 # Frames per second
 FPS = 5
@@ -61,6 +61,9 @@ smallfont = pygame.font.SysFont("comicsansms", 30)
 mediumfont = pygame.font.SysFont("comicsansms", 40)
 largefont = pygame.font.SysFont("comicsansms", 60)
 
+def carImage(x,y):
+	gameDisplay.blit(SmartCarImage, (x,y))
+
 # Display updated
 pygame.display.update()
 
@@ -72,27 +75,23 @@ def init():
 	grassSlip = 0
 
 	grass_width = 170
-	grass_height = 600
+	grass_height = 700
 
 	# Road and Greenland seperator
 	border_width = 30
-	border_height = 600
-
-	# Images position locations
-	carLeftPosiitonX = 240
-	carLeftPosiitonY = 480
+	border_height = 700
 
 	# Game basic design init [Left side] & [Right side]
+	gameDisplay.fill(black)
 	pygame.draw.rect(gameDisplay, grey, (grass_width, 0, border_width, border_height))
 	pygame.draw.rect(gameDisplay, grey, (display_width - grass_width - border_width, 0, border_width, border_height))
 
-	for x in range(0,10):
+	for x in range(0,11):
 		gameDisplay.blit(grassRoad, (0, grassSlip))
 		gameDisplay.blit(grassRoad, (530, grassSlip))
 		grassSlip = grassSlip + 63
 
-	# Picturising car image, sorry SmartCar image
-	gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
+	# Road under maintainance, be safe!
 	gameDisplay.blit(stripOne, (340,0))
 	pygame.display.update()
 
@@ -114,29 +113,29 @@ def gameloop():
 	divider_width = 20
 	divider_height = 80
 
-	# Images position locations
-	carLeftPosiitonX = 240
-	carLeftPosiitonY = 480
-	carRightPosiitonX = 400
-	carRightPosiitonY = 480
+	# carImage Position
+	carX = 240
+	carY = 580
 
+	# Picturising car image, sorry SmartCar image
+	carImage(carX,carY)
+	change_x = 0
 	# Heart starts beating, Don't stop it!
 	while gameplay:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				gameplay = False
-			elif event.type == pygame.KEYDOWN:
+			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_RIGHT:
-					gameDisplay.blit(coverImage, (carLeftPosiitonX-40,carLeftPosiitonY))
-					gameDisplay.blit(SmartCarImage, (carRightPosiitonX,carRightPosiitonY))
-					pygame.display.update()
+					change_x = 170
 				if event.key == pygame.K_LEFT:
-					gameDisplay.blit(coverImage, (carRightPosiitonX-40,carRightPosiitonY))
-					gameDisplay.blit(SmartCarImage, (carLeftPosiitonX,carLeftPosiitonY))
-					pygame.display.update()
-			else:
-				print event
-		
+					change_x = -170
+			if event.type == pygame.KEYUP:
+				if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+					change_x = 0
+		init()
+		carX += change_x
+		carImage(carX, carY)
 		# Updating Score
 		Score(score)
 		score = score + 1
