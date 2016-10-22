@@ -25,7 +25,7 @@ black = (0,0,0)
 grey = (211,211,211)
 
 # Display width and height are defined
-display_width = 700
+display_width = 950
 display_height = 700
 
 # Frames per second
@@ -61,16 +61,14 @@ smallfont = pygame.font.SysFont("comicsansms", 30)
 mediumfont = pygame.font.SysFont("comicsansms", 40)
 largefont = pygame.font.SysFont("comicsansms", 60)
 
+# Engine sound added
+menu_song = pygame.mixer.music.load(path.join(extras, "engine_sound.mp3"))
+pygame.mixer.music.play(-1)	
+
 def carImage(x,y):
 	gameDisplay.blit(SmartCarImage, (x,y))
 
-# Display updated
-pygame.display.update()
-
 def init():
-	# Engine sound added
-	menu_song = pygame.mixer.music.load(path.join(extras, "engine_sound.mp3"))
-	pygame.mixer.music.play(-1)	
 
 	grassSlip = 0
 
@@ -86,13 +84,14 @@ def init():
 	pygame.draw.rect(gameDisplay, grey, (grass_width, 0, border_width, border_height))
 	pygame.draw.rect(gameDisplay, grey, (display_width - grass_width - border_width, 0, border_width, border_height))
 
-	for x in range(0,11):
+	for x in range(0,12):
 		gameDisplay.blit(grassRoad, (0, grassSlip))
-		gameDisplay.blit(grassRoad, (530, grassSlip))
+		gameDisplay.blit(grassRoad, (780, grassSlip))
 		grassSlip = grassSlip + 63
 
 	# Road under maintainance, be safe!
-	gameDisplay.blit(stripOne, (340,0))
+	gameDisplay.blit(stripOne, (380,0))
+	gameDisplay.blit(stripOne, (560,0))
 	pygame.display.update()
 
 def Score(score):
@@ -114,7 +113,7 @@ def gameloop():
 	divider_height = 80
 
 	# carImage Position
-	carX = 240
+	carX = 270
 	carY = 580
 
 	# Picturising car image, sorry SmartCar image
@@ -127,9 +126,9 @@ def gameloop():
 				gameplay = False
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_RIGHT:
-					change_x = 170
+					change_x = 190
 				if event.key == pygame.K_LEFT:
-					change_x = -170
+					change_x = -190
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 					change_x = 0
@@ -141,10 +140,12 @@ def gameloop():
 		score = score + 1
 
 		if Divider == True:
-			gameDisplay.blit(stripTwo, (340, 0))
+			gameDisplay.blit(stripTwo, (380, 0))
+			gameDisplay.blit(stripTwo, (560, 0))
 			Divider = False
 		else :
-			gameDisplay.blit(stripOne, (340, 0))
+			gameDisplay.blit(stripOne, (380, 0))
+			gameDisplay.blit(stripOne, (560, 0))
 			Divider = True
 
 		pygame.display.update()
