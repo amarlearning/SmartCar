@@ -136,8 +136,8 @@ def gameloop():
 		carX += change_x
 		carImage(carX, carY)
 		# Updating Score
-		Score(score)
-		score = score + 1
+		# Score(score)
+		# score = score + 1
 
 		if Divider == True:
 			gameDisplay.blit(stripTwo, (380, 0))
