@@ -12,7 +12,6 @@ We are be using TensorFlow and Scikit-Learn for the machine learning and Pygame 
 
 ##Index
 - [Demo](#demo)
-- [Features](#features)
 - [Installation](#installation)
   - [Clone it](#clone-it)
   - [Run it](#run-it)
