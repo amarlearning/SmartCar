@@ -41,7 +41,7 @@ grassRoad = pygame.image.load(path.join(assets + '/grassslip.png'))
 stripOne = pygame.image.load(path.join(assets + '/stripone.png'))
 stripTwo = pygame.image.load(path.join(assets + '/striptwo.png'))
 coverImage = pygame.image.load(path.join(assets + '/cover.png'))
-SmartCarImage = pygame.image.load(path.join(assets + '/smartcar.png'))
+SmartCarImage = pygame.image.load(path.join(assets + '/newcar1_opt.png'))
 
 # Game windown, caption initialised
 gameDisplay = pygame.display.set_mode((display_width, display_height))
@@ -57,7 +57,7 @@ SmartCarImage = pygame.transform.rotate(SmartCarImage, 90)
 clock = pygame.time.Clock()
 
 # Fonts Init
-smallfont = pygame.font.SysFont("comicsansms", 30)
+smallfont = pygame.font.SysFont("comicsansms", 20)
 mediumfont = pygame.font.SysFont("comicsansms", 40)
 largefont = pygame.font.SysFont("comicsansms", 60)
 
@@ -113,8 +113,8 @@ def gameloop():
 	divider_height = 80
 
 	# carImage Position
-	carX = 270
-	carY = 580
+	carX = 205
+	carY = 530
 
 	# Picturising car image, sorry SmartCar image
 	carImage(carX,carY)
@@ -134,7 +134,13 @@ def gameloop():
 					change_x = 0
 		init()
 		carX += change_x
-		carImage(carX, carY)
+		if (carX<=585 and carX>=205):
+			carImage(carX, carY)
+		else:
+			carX -= change_x
+			carImage(carX, carY)
+
+
 		# Updating Score
 		Score(score)
 		score = score + 1
