@@ -20,15 +20,14 @@ We are be using TensorFlow and Scikit-Learn for the machine learning and Pygame 
 - [Issues](#issues)
 - [License](#license)
 
-
 ***
 
 ##Demo
 [:arrow_up:\[Back to Top\]](https://github.com/amarlearning/SmartCar#SmartCar)
 
 Watch a live demo of it working here <br><br>
-[![SmartCar](https://github.com/amarlearning/Plaked/raw/master/screenshots/giphy.gif)](https://youtu.be/67en0hRGUvc)
-
+<!--[![SmartCar](https://github.com/amarlearning/Plaked/raw/master/screenshots/giphy.gif)](https://youtu.be/67en0hRGUvc)-->
+> Will be updated soon!
 ***
 
 ##Installation
