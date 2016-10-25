@@ -103,6 +103,8 @@ def Score(score):
 	gameDisplay.blit(text, [10,10])
 
 def gameloop():
+
+	global FPS
 	# All necessary variable initalised
 	init()
 	# Kickstart variable
@@ -132,9 +134,6 @@ def gameloop():
 
 	# Heart starts beating, Don't stop it!
 	while gameplay:
-		FPS=5
-		t=score/100
-		FPS+=t/10
 		
 		if which_car == 2:
 			which_car = 0
@@ -148,29 +147,12 @@ def gameloop():
 				if event.key == pygame.K_RIGHT:
 					change_x = 190
 				if event.key == pygame.K_LEFT:
-					change_x = -190
-			if event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_DOWN:
-					if(carX==rcarX[0]):
-						a -=40
-					if(carX==rcarX[1]):
-						b -=40
-					if(carX==rcarX[2]):
-						c -=40
-					
+					change_x = -190	
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 					change_x = 0
-				if event.key == pygame.K_DOWN:
-					if(carX==rcarX[0]):
-						a +=20
-					if(carX==rcarX[1]):
-						b +=20
-					if(carX==rcarX[2]):
-						c +=20
 
 		init()
-
 		# changing position of SmartCar
 		carX += change_x
 		if (carX<=700 and carX>=205):
@@ -221,6 +203,8 @@ def gameloop():
 		pygame.display.update()
 
 		clock.tick(FPS)
+		if not score % 2000:
+			FPS += 1
 
 	# You will win, try one more time. Don't Quit.
 	pygame.quit()
