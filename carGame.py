@@ -41,8 +41,9 @@ grassRoad = pygame.image.load(path.join(assets + '/grassslip.png'))
 stripOne = pygame.image.load(path.join(assets + '/stripone.png'))
 stripTwo = pygame.image.load(path.join(assets + '/striptwo.png'))
 coverImage = pygame.image.load(path.join(assets + '/cover.png'))
-SmartCarImage = pygame.image.load(path.join(assets + '/newcar0_opt.png'))
-
+SmartCarImage = [pygame.image.load(path.join(assets + '/newcar0_opt.png')),pygame.image.load(path.join(assets + '/newcar2_opt.png')),pygame.image.load(path.join(assets + '/newcar3_opt.png'))]
+RivalCarImage =pygame.image.load(path.join(assets + '/Black_viper_opt.png'))
+Boom =pygame.image.load(path.join(assets + '/exp.png'))
 # Game windown, caption initialised
 gameDisplay = pygame.display.set_mode((display_width, display_height))
 
@@ -50,14 +51,11 @@ gameDisplay = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption('SmartCar')
 pygame.display.set_icon(gameIcon)
 
-# Image transformation 
-SmartCarImage = pygame.transform.rotate(SmartCarImage, 90)
-
 # Clock init for Frames
 clock = pygame.time.Clock()
 
 # Fonts Init
-smallfont = pygame.font.SysFont("comicsansms", 23)
+smallfont = pygame.font.SysFont("comicsansms", 15)
 mediumfont = pygame.font.SysFont("comicsansms", 40)
 largefont = pygame.font.SysFont("comicsansms", 60)
 
@@ -65,11 +63,16 @@ largefont = pygame.font.SysFont("comicsansms", 60)
 menu_song = pygame.mixer.music.load(path.join(extras, "engine_sound.mp3"))
 pygame.mixer.music.play(-1)	
 
-def carImage(x,y):
-	gameDisplay.blit(SmartCarImage, (x,y))
+# smart car image function
+def carImage(x,y, which):
+	gameDisplay.blit(SmartCarImage[which], (x,y))
 
+# rival car image function
+def rivalcarImage(x,y):
+ 	gameDisplay.blit(RivalCarImage, (x,y))
+
+# function to init all game assets!
 def init():
-
 	grassSlip = 0
 
 	grass_width = 170
@@ -115,12 +118,28 @@ def gameloop():
 	# carImage Position
 	carX = 225
 	carY = 560
+	rcarXa= 225
+	rcarXb= 225+190
+	rcarXc= 225+380
+	rcarY= 0
+	a=b=c=rcarY
+	# car change variable
+	which_car = 0
 
 	# Picturising car image, sorry SmartCar image
-	carImage(carX,carY)
+	carImage(carX,carY, which_car)
 	change_x = 0
+
+	rivalcarImage(rcarXa,rcarY)
+
 	# Heart starts beating, Don't stop it!
 	while gameplay:
+		
+		if which_car == 2:
+			which_car = 0
+		else:
+			which_car += 1
+
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				gameplay = False
@@ -133,13 +152,33 @@ def gameloop():
 				if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 					change_x = 0
 		init()
+
+		# changing position of SmartCar
 		carX += change_x
 		if (carX<=700 and carX>=205):
-			carImage(carX, carY)
+			carImage(carX, carY, which_car)
 		else:
 			carX -= change_x
-			carImage(carX, carY)
+			carImage(carX, carY, which_car)
 
+		# controlling movements of traffic
+		if score>10:
+			rivalcarImage(rcarXa,a)
+			a +=20
+			if a>1000:
+				a=0
+		if score>60:
+			rivalcarImage(rcarXb,b)
+			b +=20
+			if b>1000:
+				b=0
+		if score>80:
+			rivalcarImage(rcarXc,c)
+			c +=20
+			if c>1000:
+				c=0
+		if (carX==rcarXa and 470 < a <700):
+			gameDisplay.blit(Boom, (carX,500))
 
 		# Updating Score
 		Score(score)
