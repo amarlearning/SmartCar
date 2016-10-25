@@ -60,7 +60,7 @@ mediumfont = pygame.font.SysFont("comicsansms", 40)
 largefont = pygame.font.SysFont("comicsansms", 60)
 
 # Engine sound added
-menu_song = pygame.mixer.music.load(path.join(extras, "engine_sound.mp3"))
+pygame.mixer.music.load(path.join(extras, "engine_sound.mp3"))
 pygame.mixer.music.play(-1)	
 
 # smart car image function
@@ -103,6 +103,8 @@ def Score(score):
 	gameDisplay.blit(text, [10,10])
 
 def gameloop():
+
+	global FPS
 	# All necessary variable initalised
 	init()
 	# Kickstart variable
@@ -145,12 +147,12 @@ def gameloop():
 				if event.key == pygame.K_RIGHT:
 					change_x = 190
 				if event.key == pygame.K_LEFT:
-					change_x = -190
+					change_x = -190	
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 					change_x = 0
-		init()
 
+		init()
 		# changing position of SmartCar
 		carX += change_x
 		if (carX<=700 and carX>=205):
@@ -163,17 +165,17 @@ def gameloop():
 		if score>10:
 			rivalcarImage(rcarX[0],a)
 			a +=20
-			if a>1000:
+			if a>random.randint(1000, 2000):
 				a=0
-		if score>60:
+		if score>32:
 			rivalcarImage(rcarX[1],b)
 			b +=20
-			if b>1000:
+			if b>random.randint(1000, 2000):
 				b=0
-		if score>80:
+		if score>75:
 			rivalcarImage(rcarX[2],c)
 			c +=20
-			if c>1000:
+			if c>random.randint(1700, 2000):
 				c=0
 
 		if (carX == rcarX[0] and 470 < a <700):
@@ -201,6 +203,8 @@ def gameloop():
 		pygame.display.update()
 
 		clock.tick(FPS)
+		if not score % 2000:
+			FPS += 1
 
 	# You will win, try one more time. Don't Quit.
 	pygame.quit()
