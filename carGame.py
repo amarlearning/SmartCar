@@ -118,9 +118,7 @@ def gameloop():
 	# carImage Position
 	carX = 225
 	carY = 560
-	rcarXa= 225
-	rcarXb= 225+190
-	rcarXc= 225+380
+	rcarX= [225,415,605]
 	rcarY= 0
 	a=b=c=rcarY
 	# car change variable
@@ -130,7 +128,7 @@ def gameloop():
 	carImage(carX,carY, which_car)
 	change_x = 0
 
-	rivalcarImage(rcarXa,rcarY)
+	rivalcarImage(rcarX[0],rcarY)
 
 	# Heart starts beating, Don't stop it!
 	while gameplay:
@@ -163,32 +161,39 @@ def gameloop():
 
 		# controlling movements of traffic
 		if score>10:
-			rivalcarImage(rcarXa,a)
+			rivalcarImage(rcarX[0],a)
 			a +=20
 			if a>1000:
 				a=0
 		if score>60:
-			rivalcarImage(rcarXb,b)
+			rivalcarImage(rcarX[1],b)
 			b +=20
 			if b>1000:
 				b=0
 		if score>80:
-			rivalcarImage(rcarXc,c)
+			rivalcarImage(rcarX[2],c)
 			c +=20
 			if c>1000:
 				c=0
-		if (carX==rcarXa and 470 < a <700):
-			gameDisplay.blit(Boom, (carX,500))
+
+		if (carX == rcarX[0] and 470 < a <700):
+			gameDisplay.blit(Boom, (carX,530))
+
+		elif (carX == rcarX[1] and 470 < b <700):
+			gameDisplay.blit(Boom, (carX,530))
+
+		elif (carX == rcarX[2] and 470 < c <700):
+			gameDisplay.blit(Boom, (carX,530))
 
 		# Updating Score
 		Score(score)
-		score = score + 1
+	 	score = score + 1
 
 		if Divider == True:
 			gameDisplay.blit(stripTwo, (380, 0))
 			gameDisplay.blit(stripOne, (560, 0))
 			Divider = False
-		else :
+		else:
 			gameDisplay.blit(stripOne, (380, 0))
 			gameDisplay.blit(stripTwo, (560, 0))
 			Divider = True
