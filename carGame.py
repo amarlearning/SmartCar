@@ -60,7 +60,7 @@ mediumfont = pygame.font.SysFont("comicsansms", 40)
 largefont = pygame.font.SysFont("comicsansms", 60)
 
 # Engine sound added
-menu_song = pygame.mixer.music.load(path.join(extras, "engine_sound.mp3"))
+pygame.mixer.music.load(path.join(extras, "engine_sound.mp3"))
 pygame.mixer.music.play(-1)	
 
 # smart car image function
@@ -132,6 +132,9 @@ def gameloop():
 
 	# Heart starts beating, Don't stop it!
 	while gameplay:
+		FPS=5
+		t=score/100
+		FPS+=t/10
 		
 		if which_car == 2:
 			which_car = 0
@@ -146,9 +149,26 @@ def gameloop():
 					change_x = 190
 				if event.key == pygame.K_LEFT:
 					change_x = -190
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_DOWN:
+					if(carX==rcarX[0]):
+						a -=40
+					if(carX==rcarX[1]):
+						b -=40
+					if(carX==rcarX[2]):
+						c -=40
+					
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 					change_x = 0
+				if event.key == pygame.K_DOWN:
+					if(carX==rcarX[0]):
+						a +=20
+					if(carX==rcarX[1]):
+						b +=20
+					if(carX==rcarX[2]):
+						c +=20
+
 		init()
 
 		# changing position of SmartCar
@@ -163,17 +183,17 @@ def gameloop():
 		if score>10:
 			rivalcarImage(rcarX[0],a)
 			a +=20
-			if a>1000:
+			if a>random.randint(1000, 2000):
 				a=0
-		if score>60:
+		if score>32:
 			rivalcarImage(rcarX[1],b)
 			b +=20
-			if b>1000:
+			if b>random.randint(1000, 2000):
 				b=0
-		if score>80:
+		if score>75:
 			rivalcarImage(rcarX[2],c)
 			c +=20
-			if c>1000:
+			if c>random.randint(1700, 2000):
 				c=0
 
 		if (carX == rcarX[0] and 470 < a <700):
