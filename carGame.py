@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: Amar Prakash Pandey
-# @Date: 25-08-2016 
+# @Co-Author: Aman Garg
+# @Date: 25-10-2016 
 # @Email: amar.om1994@gmail.com  
 # @Github username: @amarlearning 
 # MIT License. You can find a copy of the License
@@ -24,12 +25,12 @@ white = (255,255,255)
 black = (0,0,0)
 grey = (211,211,211)
 
+# Frames per second
+FPS = 6
+
 # Display width and height are defined
 display_width = 950
 display_height = 700
-
-# Frames per second
-FPS = 5
 
 # Folder path init
 assets = path.join(path.dirname(__file__), 'assets/image')
@@ -41,9 +42,13 @@ grassRoad = pygame.image.load(path.join(assets + '/grassslip.png'))
 stripOne = pygame.image.load(path.join(assets + '/stripone.png'))
 stripTwo = pygame.image.load(path.join(assets + '/striptwo.png'))
 coverImage = pygame.image.load(path.join(assets + '/cover.png'))
-SmartCarImage = [pygame.image.load(path.join(assets + '/newcar0_opt.png')),pygame.image.load(path.join(assets + '/newcar2_opt.png')),pygame.image.load(path.join(assets + '/newcar3_opt.png'))]
+SmartCarImage = [pygame.image.load(path.join(assets + '/newcar0_opt.png')),
+				pygame.image.load(path.join(assets + '/newcar2_opt.png')),
+				pygame.image.load(path.join(assets + '/newcar3_opt.png'))]
 RivalCarImage =pygame.image.load(path.join(assets + '/Black_viper_opt.png'))
 Boom =pygame.image.load(path.join(assets + '/exp.png'))
+GameOver =pygame.image.load(path.join(assets + '/gameover.png'))
+
 # Game windown, caption initialised
 gameDisplay = pygame.display.set_mode((display_width, display_height))
 
@@ -62,14 +67,6 @@ largefont = pygame.font.SysFont("comicsansms", 60)
 # Engine sound added
 pygame.mixer.music.load(path.join(extras, "engine_sound.mp3"))
 pygame.mixer.music.play(-1)	
-
-# smart car image function
-def carImage(x,y, which):
-	gameDisplay.blit(SmartCarImage[which], (x,y))
-
-# rival car image function
-def rivalcarImage(x,y):
- 	gameDisplay.blit(RivalCarImage, (x,y))
 
 # function to init all game assets!
 def init():
@@ -97,6 +94,35 @@ def init():
 	gameDisplay.blit(stripTwo, (560,0))
 	pygame.display.update()
 
+# smart car image function
+def carImage(x,y, which):
+	gameDisplay.blit(SmartCarImage[which], (x,y))
+
+# rival car image function
+def rivalcarImage(x,y):
+ 	gameDisplay.blit(RivalCarImage, (x,y))
+
+def Kaboom(score):
+	init()
+	gameDisplay.blit(GameOver,(382,175))
+	pygame.draw.rect(gameDisplay, white, (200, 400, 550, 50))
+	text = smallfont.render("Press [RETURN] to continue and [Q] to quit", True, darkBlue)
+	gameDisplay.blit(text, [370,400])
+	text = smallfont.render("Score : " + str(score), True, red)
+	gameDisplay.blit(text, [450,420])
+	pygame.display.update()
+	gameExit = True
+	while gameExit:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_RETURN:
+					gameExit = False
+					gameloop()
+				if event.key == pygame.K_q:
+					pygame.quit()
+
 def Score(score):
 	pygame.draw.rect(gameDisplay, green, (0,0, 170,45))
 	text = smallfont.render("Score : " + str(score), True, darkBlue)
@@ -104,12 +130,13 @@ def Score(score):
 
 def gameloop():
 
-	global FPS
 	# All necessary variable initalised
 	init()
+
 	# Kickstart variable
 	gameplay = True
 	score = 0
+
 	# Grass 2D image & Road Divider
 	Divider = True
 
@@ -120,9 +147,17 @@ def gameloop():
 	# carImage Position
 	carX = 225
 	carY = 560
+
+	# Rival car coordinates 
 	rcarX= [225,415,605]
 	rcarY= 0
-	a=b=c=rcarY
+	Ya=rcarY
+	Yb=-140
+	Yc=-280
+
+	# speed Factor
+	factor = 20
+
 	# car change variable
 	which_car = 0
 
@@ -135,6 +170,7 @@ def gameloop():
 	# Heart starts beating, Don't stop it!
 	while gameplay:
 		
+		# Police siren activated :P
 		if which_car == 2:
 			which_car = 0
 		else:
@@ -148,10 +184,11 @@ def gameloop():
 					change_x = 190
 				if event.key == pygame.K_LEFT:
 					change_x = -190	
+			
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 					change_x = 0
-
+				
 		init()
 		# changing position of SmartCar
 		carX += change_x
@@ -162,35 +199,38 @@ def gameloop():
 			carImage(carX, carY, which_car)
 
 		# controlling movements of traffic
-		if score>10:
-			rivalcarImage(rcarX[0],a)
-			a +=20
-			if a>random.randint(1000, 2000):
-				a=0
-		if score>32:
-			rivalcarImage(rcarX[1],b)
-			b +=20
-			if b>random.randint(1000, 2000):
-				b=0
-		if score>75:
-			rivalcarImage(rcarX[2],c)
-			c +=20
-			if c>random.randint(1700, 2000):
-				c=0
+		if score > 10:
+			rivalcarImage(rcarX[0],Ya)
+			Ya += factor
+			if Ya > random.randint(1000, 2000):
+				Ya = 0
+		if score > 32:
+			rivalcarImage(rcarX[1],Yb)
+			Yb += factor
+			if Yb > random.randint(1000, 2000):
+				Yb=0
+		if score > 75:
+			rivalcarImage(rcarX[2],Yc)
+			Yc += factor
+			if Yc > random.randint(1700, 2000):
+				Yc=0
 
-		if (carX == rcarX[0] and 470 < a <700):
-			gameDisplay.blit(Boom, (carX,530))
+		# car conflict avoiding condition
+		if (abs(Ya-Yb) < 280) or (abs(Yb-Yc) < 280):
+			Yb -= 350
 
-		elif (carX == rcarX[1] and 470 < b <700):
+		# car crash condiiton!
+		if (carX == rcarX[0] and 470 < Ya <700) or (carX == rcarX[1] and 470 < Yb <700) or (carX == rcarX[2] and 470 < Yc <700):
 			gameDisplay.blit(Boom, (carX,530))
-
-		elif (carX == rcarX[2] and 470 < c <700):
-			gameDisplay.blit(Boom, (carX,530))
+			pygame.display.flip()
+			time.sleep(1)
+			Kaboom(score)
 
 		# Updating Score
 		Score(score)
 	 	score = score + 1
 
+	 	# Car moving visualization
 		if Divider == True:
 			gameDisplay.blit(stripTwo, (380, 0))
 			gameDisplay.blit(stripOne, (560, 0))
@@ -202,14 +242,18 @@ def gameloop():
 
 		pygame.display.update()
 
+		# speed of game.
 		clock.tick(FPS)
-		if not score % 2000:
-			FPS += 1
 
-	# You will win, try one more time. Don't Quit.
-	pygame.quit()
+		# Game speed increases with increase in time.
+		if not score %1000:
+			factor += 10
 
-	# you can signoff now, everything looks good!
-	quit()
-	
+# Kickstart the game! 
 gameloop()
+
+# You will win, try one more time. Don't Quit.
+pygame.quit()
+
+# you can signoff now, everything looks good!
+quit()
