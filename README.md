@@ -10,7 +10,7 @@ A **SmartCar** is a self-driving and self-learning car that can move around in t
 
 We are be using TensorFlow and Scikit-Learn for the machine learning and Pygame and Pymunk for the game.
 
-##Index
+## Index
 - [Demo](#demo)
 - [Installation](#installation)
   - [Clone it](#clone-it)
@@ -22,7 +22,7 @@ We are be using TensorFlow and Scikit-Learn for the machine learning and Pygame 
 
 ***
 
-##Demo
+## Demo
 [:arrow_up:\[Back to Top\]](https://github.com/amarlearning/SmartCar#SmartCar)
 
 Watch a live demo of it working here <br><br>
@@ -30,7 +30,7 @@ Watch a live demo of it working here <br><br>
 > Will be updated soon!
 ***
 
-##Installation
+## Installation
 [:arrow_up:\[Back to Top\]](https://github.com/amarlearning/SmartCar#SmartCar)
 
 #### Clone it
@@ -71,7 +71,7 @@ You can [tweet me](https://twitter.com/iamarpandey) if you can't get it to work.
 
 ***
 
-##License
+## License
 [:arrow_up:\[Back to Top\]](https://github.com/amarlearning/SmartCar#SmartCar)
 
 Built with ♥ by Amar Prakash Pandey([@amarlearning](http://github.com/amarlearning)) under [MIT License](http://amarlearning.mit-license.org/) 
